@@ -7,7 +7,9 @@ const Books = () => {
   useEffect(() => {
     const fetchAllBooks = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/books");
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/books`
+        );
         console.log(res);
         setBooks(res.data);
       } catch (error) {
@@ -20,7 +22,7 @@ const Books = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/books/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/books/${id}`);
       window.location.reload();
       // setBooks(books.filter((book) => book._id !== id));
     } catch (error) {

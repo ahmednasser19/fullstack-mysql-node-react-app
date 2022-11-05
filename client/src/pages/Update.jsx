@@ -18,7 +18,10 @@ const Update = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      await axios.put("http://localhost:8080/books/" + bookId, book);
+      await axios.put(
+        `${process.env.REACT_APP_API_BASE_URL}/books/${bookId}`,
+        book
+      );
       navigate("/");
     } catch (error) {
       console.log(error);

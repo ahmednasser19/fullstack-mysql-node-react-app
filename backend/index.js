@@ -1,18 +1,24 @@
 import express from 'express';
 import mysql from "mysql2"
 import cors from 'cors'
+import dotenv from 'dotenv'
+
+dotenv.config()
 const app = express();
 
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "pass123",
-    database: "test",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     insecureAuth: true
 })
 app.use(express.json())
-app.use(cors())
+// var corsOptions = {
+//     origin: process.env.CLIENT_ORIGIN || "http://localhost:8080"
+// };
 
+app.use(cors());
 app.get("/", (req, res) => {
     res.json("hello world");
 })
@@ -69,7 +75,8 @@ app.put('/books/:id', (req, res) => {
     })
 })
 
+const PORT = process.env.NODE_DOCKER_PORT || 8080;
 
-app.listen(8080, () => {
-    console.log("Server is running on port 8080");
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 })
